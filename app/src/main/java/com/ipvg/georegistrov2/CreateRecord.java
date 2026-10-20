@@ -78,16 +78,13 @@ public class CreateRecord extends AppCompatActivity {
         btnVolver.setOnClickListener(v -> finish());
 
         btnGuardar.setOnClickListener(v -> {
-            String title = Titulo.getText().toString().trim();
-
-            if (title.isEmpty()) {
-                Toast.makeText(CreateRecord.this, "Debe ingresar un título", Toast.LENGTH_SHORT).show();
-                return;
+            if (ValidarCampos()) {
+                // Guardar los datos en FireStore
+                Toast.makeText(CreateRecord.this, "Registro guardado correctamente", Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(CreateRecord.this, "Por favor complete todos los campos requeridos", Toast.LENGTH_SHORT).show();
             }
-
-            // Notificar guardado y cerrar la ventana
-            Toast.makeText(CreateRecord.this, "Registro guardado correctamente", Toast.LENGTH_SHORT).show();
-            finish();
         });
 
         // PERMISOS DE GPS
@@ -150,11 +147,63 @@ public class CreateRecord extends AppCompatActivity {
 
                         Toast.makeText(this, "Ubicación obtenida con éxito", Toast.LENGTH_SHORT).show();
                     } else {
-                        Toast.makeText(this, "No se pudo obtener la ubicación actual. Asegúrate de tener el GPS activo.", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "El GPS está desactivado, activelo vuelva a abrir la ventana de registro.", Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(this, e ->
                         Toast.makeText(this, "Error al obtener ubicación: " + e.getMessage(), Toast.LENGTH_SHORT).show()
                 );
+    }
+    // Validaciones basicas para cada campo
+    private boolean ValidarCampos() {
+        if (Titulo.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Debe incluir un título en el registro", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (Descripcion.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Debe incluir una descripción", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (spinnerCategoria.getSelectedItemPosition() == 0) {
+            Toast.makeText(this, "Debe seleccionar una categoría", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (FechaHora.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Debe incluir la fecha y hora", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (Latitud.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Debe incluir la latitud", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (Longitud.getText().toString().trim().isEmpty()) {
+            Toast.makeText(this, "Debe incluir la longitud", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        // Validar el rango de valores de las coordenadas
+        try {
+            double lat = Double.parseDouble(Latitud.getText().toString());
+            double lon = Double.parseDouble(Longitud.getText().toString());
+
+            if (lat < -90.0 || lat > 90.0) {
+                Toast.makeText(this, "La latitud debe estar entre -90 y 90", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+
+            if (lon < -180.0 || lon > 180.0) {
+                Toast.makeText(this, "La longitud debe estar entre -180 y 180", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Las coordenadas deben ser números válidos", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }
