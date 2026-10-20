@@ -174,5 +174,14 @@
             android:textColor="#373737"
             android:textSize="17sp" />
 
+        <ProgressBar
+            android:id="@+id/progressBar5"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_marginBottom="16dp"
+            android:indeterminate="true"/>
+
     </LinearLayout>
 </ScrollView>

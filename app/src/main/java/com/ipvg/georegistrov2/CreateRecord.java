@@ -3,9 +3,11 @@ package com.ipvg.georegistrov2;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -22,10 +24,13 @@ import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.CancellationTokenSource;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class CreateRecord extends AppCompatActivity {
 
@@ -37,6 +42,7 @@ public class CreateRecord extends AppCompatActivity {
     private EditText Longitud;
     private Button btnGuardar;
     private Button btnVolver;
+    private ProgressBar progressBar;
     // Cliente de ubicación de Google Play Services
     private FusedLocationProviderClient fusedLocationClient;
 
@@ -63,6 +69,7 @@ public class CreateRecord extends AppCompatActivity {
         Longitud = findViewById(R.id.etLongitud);
         btnGuardar = findViewById(R.id.btnGuardar);
         btnVolver = findViewById(R.id.btnVolver);
+        progressBar = findViewById(R.id.progressBar5);
 
         // Llenar automáticamente la Fecha y Hora actual
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
@@ -78,20 +85,40 @@ public class CreateRecord extends AppCompatActivity {
         btnVolver.setOnClickListener(v -> finish());
 
         btnGuardar.setOnClickListener(v -> {
+            FirebaseFirestore db = FirebaseFirestore.getInstance();
             if (ValidarCampos()) {
+                progressBar.setVisibility(View.VISIBLE);
                 // Guardar los datos en FireStore
-                Toast.makeText(CreateRecord.this, "Registro guardado correctamente", Toast.LENGTH_SHORT).show();
-                finish();
+                Map<String, Object> registro = new HashMap<>();
+
+                registro.put("titulo", Titulo.getText().toString().trim());
+                registro.put("descripcion", Descripcion.getText().toString().trim());
+                registro.put("categoria", spinnerCategoria.getSelectedItem().toString());
+                registro.put("fechaHora", FechaHora.getText().toString().trim());
+                registro.put("latitud", Double.parseDouble(Latitud.getText().toString().trim()));
+                registro.put("longitud", Double.parseDouble(Longitud.getText().toString().trim()));
+
+                db.collection("registros")
+                                .add(registro)
+                                .addOnSuccessListener(documentReference -> {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(CreateRecord.this, "Registro guardado correctamente", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                })
+                                .addOnFailureListener(f -> {
+                                    progressBar.setVisibility(View.GONE);
+                                    Toast.makeText(CreateRecord.this, "Error al guardar en FireStore" + f.getMessage(), Toast.LENGTH_SHORT).show();
+                                });
+
             } else {
                 Toast.makeText(CreateRecord.this, "Por favor complete todos los campos requeridos", Toast.LENGTH_SHORT).show();
             }
         });
 
         // PERMISOS DE GPS
-        //  Inicializar cliente de ubicación
+        // Inicializar cliente de ubicación
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
-        // Registrar el callback de solicitud de permisos
         locationPermissionRequest = registerForActivityResult(
                 new ActivityResultContracts.RequestMultiplePermissions(),
                 result -> {
@@ -118,7 +145,7 @@ public class CreateRecord extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             obtenerUbicacionActual();
         } else {
-            // Lanza el diálogo del sistema ("Solo por esta vez / Mientras la app está en uso / Denegar")
+            // Lanza el diálogo del sistema
             locationPermissionRequest.launch(new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
@@ -132,7 +159,6 @@ public class CreateRecord extends AppCompatActivity {
             return;
         }
 
-        // Solicitar la ubicación actual con alta precisión
         CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
 
         fusedLocationClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, cancellationTokenSource.getToken())
