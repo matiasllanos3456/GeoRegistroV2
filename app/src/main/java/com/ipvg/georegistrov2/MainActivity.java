@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
-
+import android.content.Intent;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -31,6 +31,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button btnIrListado = findViewById(R.id.btnLeerDatos);
         Button btnIrMapa = findViewById(R.id.btnMapa);
         tvValoresSensor = findViewById(R.id.Coordenadas);
+
+        // Listeners de los botones
+        btnIrRegistro.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, CreateRecord.class);
+            startActivity(intent);
+        });
+        btnIrListado.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ReadRecords.class);
+            startActivity(intent);
+        });
+        btnIrMapa.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, ViewMap.class);
+            startActivity(intent);
+        });
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
 
