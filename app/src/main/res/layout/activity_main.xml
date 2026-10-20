@@ -1,19 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#96FDA2"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp"
     tools:context=".MainActivity">
 
+    <!-- Texto para los datos del Acelerómetro -->
     <TextView
-        android:layout_width="wrap_content"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_marginTop="32dp"
+        android:background="#80FFFFFF"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Datos Acelerómetro"
+        android:textColor="#000000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <!-- Espacio flexible para separar el texto de los botones -->
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.3" />
+
+    <TextView
+        android:id="@+id/Coordenadas"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:text="TextView"
+        android:textSize="24sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <!-- Botón 1: Ventana de Registro -->
+    <Button
+        android:id="@+id/btnRegistro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#EFFFEA"
+        android:paddingVertical="15dp"
+        android:text="Realizar registro"
+        android:textColor="#373737"
+        android:textSize="17sp" />
+
+    <!-- Botón 2: Registros de la Base de Datos -->
+    <Button
+        android:id="@+id/btnLeerDatos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#3C97FF"
+        android:paddingVertical="15dp"
+        android:text="Ver registros"
+        android:textSize="17dp" />
+
+    <!-- Botón 3: Abrir Mapa -->
+
+    <Button
+        android:id="@+id/btnMapa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="30dp"
+        android:backgroundTint="#3CA4FF"
+        android:paddingVertical="15dp"
+        android:text="Abrir mapa"
+        android:textSize="17dp" />
+
+</LinearLayout>
