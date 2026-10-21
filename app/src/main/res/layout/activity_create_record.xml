@@ -14,7 +14,6 @@
         android:orientation="vertical"
         android:padding="24dp">
 
-        <!-- Título de la pantalla -->
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,7 +25,6 @@
             android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- Campo: Título -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +45,6 @@
             android:padding="12dp"
             android:textSize="16sp" />
 
-        <!-- Campo: Descripción -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -70,7 +67,6 @@
             android:padding="12dp"
             android:textSize="16sp" />
 
-        <!-- Campo: Categoría (Spinner) -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -88,7 +84,6 @@
             android:background="#FFFFFF"
             android:padding="8dp" />
 
-        <!-- Campo: Fecha y Hora -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -109,7 +104,6 @@
             android:padding="12dp"
             android:textSize="16sp" />
 
-        <!-- Campo: Coordenadas (Latitud y Longitud) -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -150,7 +144,6 @@
                 android:textSize="15sp" />
         </LinearLayout>
 
-        <!-- Botón: Guardar Registro -->
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="match_parent"
@@ -162,7 +155,6 @@
             android:textColor="#FFFFFF"
             android:textSize="17sp" />
 
-        <!-- Botón: Volver -->
         <Button
             android:id="@+id/btnVolver"
             android:layout_width="match_parent"

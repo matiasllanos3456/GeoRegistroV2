@@ -26,6 +26,7 @@ import com.google.android.gms.location.Priority;
 import com.google.android.gms.tasks.CancellationTokenSource;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
@@ -199,6 +200,15 @@ public class CreateRecord extends AppCompatActivity {
 
         if (FechaHora.getText().toString().trim().isEmpty()) {
             Toast.makeText(this, "Debe incluir la fecha y hora", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+        String fechaIngresada = FechaHora.getText().toString().trim();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm",Locale.getDefault());
+        sdf.setLenient(false);
+        try {
+            Date fechaValida = sdf.parse(fechaIngresada);
+        } catch (ParseException ex){
+            Toast.makeText(this, "La fecha debe tener el formato: dd/mm/yyyy HH:mm", Toast.LENGTH_SHORT).show();
             return false;
         }
 

@@ -10,7 +10,6 @@
     android:padding="24dp"
     tools:context=".MainActivity">
 
-    <!-- Texto para los datos del Acelerómetro -->
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -24,7 +23,6 @@
         android:textSize="18sp"
         android:textStyle="bold" />
 
-    <!-- Espacio flexible para separar el texto de los botones -->
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +41,6 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
-    <!-- Botón 1: Ventana de Registro -->
     <Button
         android:id="@+id/btnRegistro"
         android:layout_width="match_parent"
@@ -57,7 +54,6 @@
         android:textColor="#373737"
         android:textSize="17sp" />
 
-    <!-- Botón 2: Registros de la Base de Datos -->
     <Button
         android:id="@+id/btnLeerDatos"
         android:layout_width="match_parent"
@@ -69,8 +65,6 @@
         android:paddingVertical="15dp"
         android:text="Ver registros"
         android:textSize="17dp" />
-
-    <!-- Botón 3: Abrir Mapa -->
 
     <Button
         android:id="@+id/btnMapa"
