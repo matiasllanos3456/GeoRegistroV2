@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button btnIrMapa = findViewById(R.id.btnMapa);
         tvValoresSensor = findViewById(R.id.Coordenadas);
 
-        // Listeners de los botones
         btnIrRegistro.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, CreateRecord.class);
             startActivity(intent);

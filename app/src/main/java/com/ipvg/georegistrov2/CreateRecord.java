@@ -44,10 +44,8 @@ public class CreateRecord extends AppCompatActivity {
     private Button btnGuardar;
     private Button btnVolver;
     private ProgressBar progressBar;
-    // Cliente de ubicación de Google Play Services
     private FusedLocationProviderClient fusedLocationClient;
 
-    // Lanzador para solicitar permisos en tiempo de ejecución
     private ActivityResultLauncher<String[]> locationPermissionRequest;
 
     @Override
@@ -76,9 +74,6 @@ public class CreateRecord extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault());
         FechaHora.setText(sdf.format(new Date()));
 
-        // En principio las coordenadas se deberán llenar automaticamente con la ubicacion del usuario
-
-        // Configurar opciones del Spinner de Categorías
         String[] categorias = {"Seleccionar categoría", "Geología", "Medio Ambiente", "Infraestructura", "Muestra de Campo", "Otro"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, categorias);
         spinnerCategoria.setAdapter(adapter);
@@ -117,7 +112,6 @@ public class CreateRecord extends AppCompatActivity {
         });
 
         // PERMISOS DE GPS
-        // Inicializar cliente de ubicación
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         locationPermissionRequest = registerForActivityResult(
@@ -146,7 +140,6 @@ public class CreateRecord extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             obtenerUbicacionActual();
         } else {
-            // Lanza el diálogo del sistema
             locationPermissionRequest.launch(new String[]{
                     Manifest.permission.ACCESS_FINE_LOCATION,
                     Manifest.permission.ACCESS_COARSE_LOCATION
